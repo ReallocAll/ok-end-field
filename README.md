@@ -63,6 +63,18 @@
 *   **智能识别**: 全角色自动识别，无需手动配置技能序列，一键启动。
 *   **自动静音**: 在后台运行时，可自动将游戏静音。
 
+## 🧭 项目运作机制
+
+本项目基于 [ok-script](https://github.com/ok-oldking/ok-script) 框架运行，核心流程如下：
+
+1. **启动入口**：`main.py` / `main_debug.py` 加载 `src/config.py`，创建 `ok.OK(config)` 并启动主循环。
+2. **全局配置**：`config.py` 统一描述窗口捕获方式（WGC/BitBlt）、OCR、任务列表、热键映射与 GUI 基础信息。
+3. **任务系统**：
+   - `onetime_tasks`：用户点击触发的任务（如 `DailyTask`）。
+   - `trigger_tasks`：常驻循环任务（如 `AutoCombatTask`、`AutoSkipDialogTask`）。
+   任务继承 `BaseEfTask`，复用截图、OCR、模板匹配等能力。
+4. **交互与识别**：通过 `EfInteraction` 在后台模拟鼠标/键盘，配合模板匹配与 OCR 识别游戏 UI 状态，实现自动化决策。
+
 ## 🔧 疑难解答 (Troubleshooting)
 
 如果遇到问题，请在提问前按以下步骤逐一排查：
